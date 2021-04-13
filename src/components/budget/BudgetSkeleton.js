@@ -4,8 +4,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import AddBudget from '../budget/AddBudget';
-// MUI Stuff
-import Typography from '@material-ui/core/Typography';
 // Redux
 import { connect } from 'react-redux';
 

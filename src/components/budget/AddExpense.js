@@ -5,6 +5,7 @@ import MyButton from "../../util/MyButton";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -20,7 +21,7 @@ const styles = (theme) => ({
   ...theme,
   submitButton: {
     position: "relative",
-    float: "right",
+    float: "center",
     marginTop: 10,
   },
   progressSpinner: {
@@ -28,7 +29,7 @@ const styles = (theme) => ({
   },
   closeButton: {
     position: "absolute",
-    left: "91%",
+    left: "85%",
     top: "6%",
   },
 });
@@ -40,6 +41,7 @@ class AddExpense extends Component {
     amount: 0.0,
     createdAt: moment().format("yyyy-MM-DD"),
     errors: {},
+    recursMonthly: false
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
@@ -54,6 +56,7 @@ class AddExpense extends Component {
         createdAt: moment().format("yyyy-MM-DD"),
         open: false,
         errors: {},
+        recursMonthly: false
       });
     }
   }
@@ -65,7 +68,10 @@ class AddExpense extends Component {
     this.setState({ open: false, errors: {} });
   };
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    if(event.target.type === "checkbox")
+      this.setState({ [event.target.name]: event.target.checked });
+    else
+      this.setState({ [event.target.name]: event.target.value });
   };
   handleSubmit = (event) => {
     event.preventDefault();
@@ -74,6 +80,7 @@ class AddExpense extends Component {
       amount: this.state.amount,
       createdAt: this.state.createdAt,
       categoryId: this.props.categoryId,
+      recursMonthly: this.state.recursMonthly
     });
   };
   render() {
@@ -138,6 +145,16 @@ class AddExpense extends Component {
                 onChange={this.handleChange}
                 fullWidth
               />
+              <div>
+                <Checkbox
+                  name="recursMonthly"
+                  value={this.state.recursMonthly}
+                  check={this.state.recursMonthly}
+                  error={errors.recursMonthly ? true : false}
+                  onChange={this.handleChange}
+                />
+                Recurs Monthly
+              </div>
               <Button
                 type="submit"
                 variant="contained"

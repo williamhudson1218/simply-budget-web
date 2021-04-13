@@ -27,7 +27,7 @@ const styles = (theme) => ({
   },
   closeButton: {
     position: "absolute",
-    left: "91%",
+    left: "85%",
     top: "6%",
   },
 });
@@ -66,7 +66,8 @@ class AddCategory extends Component {
     event.preventDefault();
     this.props.postCategory({
       description: this.state.description,
-      budgetId: this.props.budgetId
+      budgetId: this.props.budgetId,
+      amount: this.state.amount
     });
   };
   render() {
@@ -107,6 +108,19 @@ class AddCategory extends Component {
                 className={classes.textField}
                 onChange={this.handleChange}
                 fullWidth
+              />
+               <TextField
+                name="amount"
+                type="decimal"
+                label="Amount"
+                rows="1"
+                placeholder="Category Budget Amount"
+                error={errors.amount ? true : false}
+                helperText={errors.amount}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+                step="0.01"
               />
               <Button
                 type="submit"

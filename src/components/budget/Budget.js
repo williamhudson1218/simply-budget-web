@@ -32,16 +32,20 @@ class Budget extends Component {
       classes,
       budget: {
         description,
-        amount,
+        totalAmount,
         budgetId,
-        createdAt,
-        userId
+        userId, 
+        amount
       },
       user: {
         authenticated,
         credentials
       }
     } = this.props;
+
+    const useAmount = amount ? amount : 0;
+    const useTotalAmount = totalAmount ? totalAmount : 0;
+    const balance = useAmount - useTotalAmount;
 
     const deleteButton =
       authenticated && userId === credentials.userId ? (
@@ -60,10 +64,9 @@ class Budget extends Component {
               </Typography>
             <CardContent className={classes.content}>
               {deleteButton}
-              <Typography variant="body2" color="textSecondary">
-                Created {dayjs(createdAt).fromNow()}
-              </Typography>
-              <Typography variant="body1">Amount: {amount}</Typography>
+              <Typography variant="body1">Budgeted Amount: ${useAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+              <Typography variant="body1">Month Total: ${useTotalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+              <div className={balance >= 0 ? "positive-balance": "negative-balance"}>${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</div>
             </CardContent>
           </div>
       </div>

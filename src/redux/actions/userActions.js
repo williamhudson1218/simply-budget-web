@@ -4,6 +4,7 @@ import {
   CLEAR_ERRORS,
   LOADING_UI,
   SET_UNAUTHENTICATED,
+  SET_AUTHENTICATED,
   LOADING_USER
 } from '../types';
 import axios from 'axios';
@@ -15,13 +16,14 @@ export const loginUser = (userData, history) => (dispatch) => {
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+      dispatch({ type: SET_AUTHENTICATED });
       dispatch({ type: CLEAR_ERRORS });
       history.push('/');
     })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: "Error on login"
       });
     });
 };
@@ -33,13 +35,14 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
+      dispatch({ type: SET_AUTHENTICATED });
       dispatch({ type: CLEAR_ERRORS });
       history.push('/');
     })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err && err.response && err.response.data
       });
     });
 };

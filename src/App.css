@@ -68,3 +68,16 @@ body {
   text-align: center;
 }
 
+.positive-balance{
+  color: green;
+}
+
+.negative-balance{
+  color: red;
+}
+
+.recurs-monthly{
+  padding: 10px 0px 0px 0px;
+  font-size: 12px;
+  font-style: italic;
+}

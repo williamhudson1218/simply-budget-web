@@ -28,7 +28,7 @@ const styles = (theme) => ({
   },
   closeButton: {
     position: "absolute",
-    left: "91%",
+    left: "85%",
     top: "6%",
   },
 });
@@ -66,7 +66,6 @@ class AddBudget extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleSubmit = (event) => {
-    console.log(this.state.createdAt)
     event.preventDefault();
     this.props.postBudget({
       description: this.state.description,

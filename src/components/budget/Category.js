@@ -6,7 +6,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import DeleteCategory from './DeleteCategory';
 // MUI Stuff
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // Redux
 import { connect } from 'react-redux';
@@ -30,19 +29,23 @@ class Category extends Component {
   render() {
     dayjs.extend(relativeTime);
     const {
-      classes,
       category: {
         description,
         amount,
         categoryId,
         createdAt,
-        userId
+        userId,
+        totalAmount
       },
       user: {
         authenticated,
         credentials
       }
     } = this.props;
+
+    const useAmount = amount ? amount : 0;
+    const useTotalAmount = totalAmount ? totalAmount : 0;
+    const balance = useAmount - useTotalAmount;
 
     const deleteButton =
       authenticated && userId === credentials.userId ? (
@@ -59,13 +62,13 @@ class Category extends Component {
           >
             {description}
           </Typography>
-        <CardContent className={classes.content}>
           {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
-          <Typography variant="body1">${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
-        </CardContent>
+          <Typography variant="body1">Budgeted Amount: ${useAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+          <Typography variant="body1">Month Total: ${useTotalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+          <div className={balance >= 0 ? "positive-balance": "negative-balance"}>${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</div>
         </div>
       </div>
     );

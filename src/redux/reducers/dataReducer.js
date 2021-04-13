@@ -9,7 +9,7 @@ import {
   POST_EXPENSE,
   POST_CATEGORY,
   POST_BUDGET,
-  SET_SCREAM,
+  SET_CATEGORY,
   SUBMIT_COMMENT,
   SET_CATEGORIES,
   SET_EXPENSES
@@ -48,10 +48,11 @@ export default function(state = initialState, action) {
         expenses: action.payload,
         loading: false
       };
-    case SET_SCREAM:
+    case SET_CATEGORY:
       return {
         ...state,
-        scream: action.payload
+        category: action.payload,
+        loading: false
       };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:

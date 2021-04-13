@@ -29,7 +29,7 @@ class Expense extends Component {
   render() {
     dayjs.extend(relativeTime);
     const {
-      expense: { description, amount, expenseId, createdAt, userId },
+      expense: { description, amount, expenseId, createdAt, userId, recursMonthly },
       user: {
         authenticated,
         credentials
@@ -48,6 +48,7 @@ class Expense extends Component {
           </Typography>
           <Typography variant="body1">{description}</Typography>
           <Typography variant="body1">${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+          { recursMonthly === true ? <div className="recurs-monthly">Recurs Monthly</div> : null }
         </div>
       </div>
     );

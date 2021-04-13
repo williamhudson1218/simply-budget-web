@@ -26,10 +26,13 @@ import axios from 'axios';
 const theme = createMuiTheme(themeObject);
 
 axios.defaults.baseURL =
-  'http://localhost:5000/simply-budget-functions/us-west3/api';
+  'https://us-west3-simply-budget-functions.cloudfunctions.net/api';
+
+  // axios.defaults.baseURL =
+  // 'http://localhost:5000/simply-budget-functions/us-west3/api';
 
 const token = localStorage.FBIdToken;
-if (token) {
+if (token) {  
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
     store.dispatch(logoutUser());

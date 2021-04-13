@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import Expense from '../components/budget/Expense';
 import ScreamSkeleton from '../util/ScreamSkeleton';
 
 import { connect } from 'react-redux';
-import { getExpenses } from '../redux/actions/dataActions';
+import { getExpenses, getCategory } from '../redux/actions/dataActions';
 import ExpenseSkeleton from '../components/budget/ExpenseSkeleton';
 
 class expenses extends Component {
@@ -14,8 +13,9 @@ class expenses extends Component {
     this.props.getExpenses(categoryId);
   }
   render() {
-      console.log(this.state)
     const { expenses, loading } = this.props.data;
+    const { categoryId } = this.props.match.params;
+
     let expensesMarkup = !loading ? (
         expenses.map((expense) => <Expense key={expense.expenseId} expense={expense} />)
     ) : (
@@ -24,7 +24,7 @@ class expenses extends Component {
     return (
       <div className="budget-list">
       <h3>Expenses</h3>
-      <ExpenseSkeleton categoryId={this.props.match.params.categoryId}/>
+      <ExpenseSkeleton categoryId={categoryId}/>
       <div class="row">
         {expensesMarkup}
       </div>
@@ -44,5 +44,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getExpenses }
+  { getExpenses, getCategory }
 )(expenses);

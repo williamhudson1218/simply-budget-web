@@ -3,9 +3,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
-import AddCategory from '../budget/AddCategory';
+import AddEditCategory from './AddEditCategory';
 // Redux
 import { connect } from 'react-redux';
+import { POST_CATEGORY } from "../../redux/types";
 
 const styles = {
   card: {
@@ -25,11 +26,10 @@ const styles = {
 class ExpenseSkeleton extends Component {
   render() {
     dayjs.extend(relativeTime);
-    console.log(this.props.budgetId)
     return (
         <div className="column">
             <div className="card">
-                <AddCategory budgetId={this.props.budgetId}/>
+                <AddEditCategory budgetId={this.props.budgetId} action={POST_CATEGORY}/>
             </div>
         </div>
     );

@@ -10,11 +10,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 // Redux stuff
 import { connect } from "react-redux";
-import { postBudget, clearErrors } from "../../redux/actions/dataActions";
+import { postBudget, clearErrors, updateBudget } from "../../redux/actions/dataActions";
 import moment from "moment";
+import { POST_BUDGET, UPDATE_BUDGET } from "../../redux/types";
 
 const styles = (theme) => ({
   ...theme,
@@ -33,7 +35,7 @@ const styles = (theme) => ({
   },
 });
 
-class AddBudget extends Component {
+class AddEditBudget extends Component {
   state = {
     open: false,
     description: "",
@@ -55,6 +57,11 @@ class AddBudget extends Component {
       });
     }
   }
+  componentDidMount(){
+    this.setState({
+      ...this.props.budget,
+    })
+  }
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -67,10 +74,20 @@ class AddBudget extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.postBudget({
-      description: this.state.description,
-      createdAt: this.state.createdAt
-    });
+    if(this.props.action === POST_BUDGET){
+      this.props.postBudget({
+        description: this.state.description,
+        createdAt: this.state.createdAt,
+      })
+    }
+    if(this.props.action === UPDATE_BUDGET){
+      this.props.updateBudget({
+        description: this.state.description,
+        budgetId: this.state.budgetId,
+        amount: this.state.amount,
+        totalAmount: this.state.totalAmount
+      })
+    }
   };
   render() {
     const { errors } = this.state;
@@ -78,10 +95,13 @@ class AddBudget extends Component {
       classes,
       UI: { loading },
     } = this.props;
+    let description = "Item";
+    if (this.props.action === POST_BUDGET) description = "Add";
+    else if (this.props.action === UPDATE_BUDGET) description = "Edit";
     return (
       <Fragment>
-        <MyButton onClick={this.handleOpen} tip="Add Budget">
-          <AddIcon />
+        <MyButton onClick={this.handleOpen} tip={`${description} Budget`}>
+          {this.props.action === POST_BUDGET ?  <AddIcon /> : <EditIcon />}
         </MyButton>
         <Dialog
           open={this.state.open}
@@ -96,7 +116,7 @@ class AddBudget extends Component {
           >
             <CloseIcon />
           </MyButton>
-          <DialogTitle>Add new budget</DialogTitle>
+          <DialogTitle>{description} budget</DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <TextField
@@ -104,6 +124,7 @@ class AddBudget extends Component {
                 type="text"
                 label="Budget"
                 rows="1"
+                value={this.state.description}
                 placeholder="Enter budget description"
                 error={errors.description ? true : false}
                 helperText={errors.description}
@@ -134,7 +155,7 @@ class AddBudget extends Component {
   }
 }
 
-AddBudget.propTypes = {
+AddEditBudget.propTypes = {
   postBudget: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
@@ -144,6 +165,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
 });
 
-export default connect(mapStateToProps, { postBudget, clearErrors })(
-  withStyles(styles)(AddBudget)
+export default connect(mapStateToProps, { postBudget, updateBudget, clearErrors })(
+  withStyles(styles)(AddEditBudget)
 );

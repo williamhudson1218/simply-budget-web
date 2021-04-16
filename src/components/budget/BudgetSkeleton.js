@@ -3,9 +3,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
-import AddBudget from '../budget/AddBudget';
+import AddEditBudget from './AddEditBudget';
 // Redux
 import { connect } from 'react-redux';
+import { POST_BUDGET } from "../../redux/types";
 
 const styles = {
   card: {
@@ -29,7 +30,7 @@ class BudgetSkeleton extends Component {
     return (
         <div className="column">
             <div className="card">
-                <AddBudget />
+                <AddEditBudget action={POST_BUDGET}/>
             </div>
         </div>
     );

@@ -11,8 +11,11 @@ import {
   SET_CATEGORY,
   SET_EXPENSES,
   POST_BUDGET,
+  UPDATE_BUDGET,
   POST_CATEGORY,
-  DELETE_EXPENSE
+  DELETE_EXPENSE,
+  UPDATE_EXPENSE,
+  UPDATE_CATEGORY
 } from '../types';
 import axios from 'axios';
 
@@ -77,7 +80,7 @@ export const postCategory = (newCategory) => (dispatch) => {
   axios
     .post('/category', newCategory)
     .then((res) => {
-      res.data.amount = res.data.amount / 100
+      res.data.amount = res.data.amount / 100;
       dispatch({
         type: POST_CATEGORY,
         payload: res.data
@@ -91,6 +94,30 @@ export const postCategory = (newCategory) => (dispatch) => {
       });
     });
 };
+
+export const updateCategory = (category) => (dispatch) => {
+  console.log(category)
+  dispatch({ type: LOADING_UI });
+  axios
+    .patch(`/category/${category.categoryId}`, category)
+    .then((res) => {
+      res.data.amount = res.data.amount / 100;
+      res.data.totalAmount = category.totalAmount;
+      dispatch({  
+        type: UPDATE_CATEGORY,
+        payload: res.data
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 // Get all categories by budget id
 export const getExpenses = (categoryId) => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -129,6 +156,27 @@ export const postExpense = (newExpense) => (dispatch) => {
       });
     });
 };
+
+export const updateExpense = (expense) => (dispatch) => {
+  console.log(expense)
+  dispatch({ type: LOADING_UI });
+  axios
+    .patch(`/expense/${expense.expenseId}`, expense)
+    .then((res) => {
+      res.data.amount = res.data.amount / 100
+      dispatch({  
+        type: UPDATE_EXPENSE,
+        payload: res.data
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 // Post a scream
 export const postBudget = (newBudget) => (dispatch) => {
   dispatch({ type: LOADING_UI });
@@ -148,6 +196,29 @@ export const postBudget = (newBudget) => (dispatch) => {
       });
     });
 };
+
+export const updateBudget = (budget) => (dispatch) => {
+  console.log(budget)
+  dispatch({ type: LOADING_UI });
+  axios
+    .patch(`/budget/${budget.budgetId}`, budget)
+    .then((res) => {
+      res.data.amount = budget.amount;
+      res.data.totalAmount = budget.totalAmount;
+      dispatch({  
+        type: UPDATE_BUDGET,
+        payload: res.data
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 export const deleteBudget = (budgetId) => (dispatch) => {
   axios
     .delete(`/budget/${budgetId}`)

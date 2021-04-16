@@ -6,9 +6,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import DeleteBudget from './DeleteBudget';
+import DeleteItem from "./DeleteItem";
+import { DELETE_BUDGET, UPDATE_BUDGET } from "../../redux/types";
 // Redux
 import { connect } from 'react-redux';
+import AddEditBudget from './AddEditBudget';
 
 const styles = {
   card: {
@@ -34,12 +36,7 @@ class Budget extends Component {
         description,
         totalAmount,
         budgetId,
-        userId, 
         amount
-      },
-      user: {
-        authenticated,
-        credentials
       }
     } = this.props;
 
@@ -47,28 +44,29 @@ class Budget extends Component {
     const useTotalAmount = totalAmount ? totalAmount : 0;
     const balance = useAmount - useTotalAmount;
 
-    const deleteButton =
-      authenticated && userId === credentials.userId ? (
-        <DeleteBudget budgetId={budgetId} />
-      ) : null;
     return (
       <div className="column">
-        <div className="card">
+        <span className="delete-item">
+          <DeleteItem id={budgetId} action={DELETE_BUDGET}/>
+        </span>
+          <span className="edit-item">
+            <AddEditBudget budget={this.props.budget} action={UPDATE_BUDGET}/>
+        </span>
+        <Link to={`/categories/${budgetId}`}>
+          <div className="card">
             <Typography
                 variant="h6"
-                component={Link}
-                to={`/categories/${budgetId}`}
                 color="primary"
                 >
                 {description}
               </Typography>
             <CardContent className={classes.content}>
-              {deleteButton}
               <Typography variant="body1">Budgeted Amount: ${useAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
               <Typography variant="body1">Month Total: ${useTotalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
               <div className={balance >= 0 ? "positive-balance": "negative-balance"}>${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</div>
             </CardContent>
           </div>
+        </Link>
       </div>
     );
   }

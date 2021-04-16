@@ -25,11 +25,11 @@ import axios from 'axios';
 
 const theme = createMuiTheme(themeObject);
 
-axios.defaults.baseURL =
-  'https://us-west3-simply-budget-functions.cloudfunctions.net/api';
+// axios.defaults.baseURL =
+//   'https://us-west3-simply-budget-functions.cloudfunctions.net/api';
 
-  // axios.defaults.baseURL =
-  // 'http://localhost:5000/simply-budget-functions/us-west3/api';
+  axios.defaults.baseURL =
+  'http://localhost:5000/simply-budget-functions/us-west3/api';
 
 const token = localStorage.FBIdToken;
 if (token) {  

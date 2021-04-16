@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
-import DeleteCategory from './DeleteCategory';
 // MUI Stuff
 import Typography from '@material-ui/core/Typography';
 // Redux
 import { connect } from 'react-redux';
+import { DELETE_CATEGORY, UPDATE_CATEGORY } from "../../redux/types";
+import DeleteItem from "./DeleteItem";
+import AddEditCategory from "./AddEditCategory";
 
 const styles = {
   card: {
@@ -34,12 +36,7 @@ class Category extends Component {
         amount,
         categoryId,
         createdAt,
-        userId,
         totalAmount
-      },
-      user: {
-        authenticated,
-        credentials
       }
     } = this.props;
 
@@ -47,29 +44,30 @@ class Category extends Component {
     const useTotalAmount = totalAmount ? totalAmount : 0;
     const balance = useAmount - useTotalAmount;
 
-    const deleteButton =
-      authenticated && userId === credentials.userId ? (
-        <DeleteCategory categoryId={categoryId} />
-      ) : null;
     return (
       <div className="column">
-        <div className="card">
-        <Typography
-            variant="h5"
-            component={Link}
-            to={`/expenses/${categoryId}`}
-            color="primary"
-          >
-            {description}
-          </Typography>
-          {deleteButton}
-          <Typography variant="body2" color="textSecondary">
-            {dayjs(createdAt).fromNow()}
-          </Typography>
-          <Typography variant="body1">Budgeted Amount: ${useAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
-          <Typography variant="body1">Month Total: ${useTotalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
-          <div className={balance >= 0 ? "positive-balance": "negative-balance"}>${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</div>
-        </div>
+        <span className="delete-item">
+          <DeleteItem id={categoryId} action={DELETE_CATEGORY}/>
+        </span>
+          <span className="edit-item">
+            <AddEditCategory category={this.props.category} action={UPDATE_CATEGORY}/>
+        </span>
+        <Link to={`/expenses/${categoryId}`}>
+          <div className="card">
+          <Typography
+              variant="h5"
+              color="primary"
+            >
+              {description}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {dayjs(createdAt).fromNow()}
+            </Typography>
+            <Typography variant="body1">Budgeted Amount: ${useAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+            <Typography variant="body1">Month Total: ${useTotalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</Typography>
+            <div className={balance >= 0 ? "positive-balance": "negative-balance"}>${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</div>
+          </div>
+        </Link>
       </div>
     );
   }

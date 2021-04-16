@@ -35,6 +35,8 @@ body {
   float: left;
   width: 25%;
   padding: 0 10px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Remove extra left and right margins, due to padding in columns */
@@ -53,6 +55,7 @@ body {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+  position: relative;
 }
 
 /* Responsive columns - one column layout (vertical) on small screens */
@@ -80,4 +83,20 @@ body {
   padding: 10px 0px 0px 0px;
   font-size: 12px;
   font-style: italic;
+}
+
+.delete-item{
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  color: black;
+  z-index: 2;
+}
+
+.edit-item{
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  color: black;
+  z-index: 2;
 }

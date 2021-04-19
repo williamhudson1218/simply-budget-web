@@ -14,7 +14,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 // Redux stuff
 import { connect } from "react-redux";
-import { postCategory, updateCategory, clearErrors } from "../../redux/actions/dataActions";
+import { postCategory, updateCategory, clearErrors } from "../../redux/actions/categoryActions";
 import { POST_CATEGORY, UPDATE_CATEGORY } from "../../redux/types";
 
 const styles = (theme) => ({
@@ -120,6 +120,7 @@ class AddEditCategory extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <TextField
+                autoFocus
                 name="description"
                 type="text"
                 label="Cateogry"

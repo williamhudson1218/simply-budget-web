@@ -5,7 +5,7 @@ import Budget from '../components/budget/Budget';
 import ScreamSkeleton from '../util/ScreamSkeleton';
 
 import { connect } from 'react-redux';
-import { getBudgets } from '../redux/actions/dataActions';
+import { getBudgets } from '../redux/actions/budgetActions';
 import BudgetSkeleton from '../components/budget/BudgetSkeleton';
 
 class home extends Component {

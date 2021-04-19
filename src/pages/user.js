@@ -9,7 +9,7 @@ import ScreamSkeleton from '../util/ScreamSkeleton';
 import ProfileSkeleton from '../util/ProfileSkeleton';
 
 import { connect } from 'react-redux';
-import { getUserData } from '../redux/actions/dataActions';
+import { getUserData } from '../redux/actions/userActions';
 
 class user extends Component {
   state = {

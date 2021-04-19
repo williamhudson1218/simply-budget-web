@@ -11,7 +11,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { connect } from 'react-redux';
-import { deleteExpense, deleteBudget, deleteCategory } from '../../redux/actions/dataActions';
+import { deleteExpense } from '../../redux/actions/expenseActions';
+import { deleteCategory } from '../../redux/actions/categoryActions';
+import { deleteBudget } from '../../redux/actions/budgetActions';
 
 import {
   DELETE_BUDGET,

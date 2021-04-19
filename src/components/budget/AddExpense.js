@@ -14,7 +14,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 // Redux stuff
 import { connect } from "react-redux";
-import { postExpense, clearErrors } from "../../redux/actions/dataActions";
+import { postExpense, clearErrors } from "../../redux/actions/expenseActions";
 import moment from "moment";
 
 const styles = (theme) => ({
@@ -110,6 +110,7 @@ class AddExpense extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <TextField
+                autoFocus
                 name="description"
                 type="text"
                 label="Expense"

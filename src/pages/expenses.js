@@ -4,7 +4,8 @@ import Expense from '../components/budget/Expense';
 import ScreamSkeleton from '../util/ScreamSkeleton';
 
 import { connect } from 'react-redux';
-import { getExpenses, getCategory } from '../redux/actions/dataActions';
+import { getExpenses } from '../redux/actions/expenseActions';
+import { getCategory } from '../redux/actions/categoryActions';
 import ExpenseSkeleton from '../components/budget/ExpenseSkeleton';
 
 class expenses extends Component {

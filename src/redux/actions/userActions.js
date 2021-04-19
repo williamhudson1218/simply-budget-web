@@ -9,6 +9,24 @@ import {
 } from '../types';
 import axios from 'axios';
 
+// export const getUserData = (userHandle) => (dispatch) => {
+//   dispatch({ type: LOADING_DATA });
+//   axios
+//     .get(`/user/${userHandle}`)
+//     .then((res) => {
+//       dispatch({
+//         type: SET_BUDGETS,
+//         payload: res.data.screams
+//       });
+//     })
+//     .catch(() => {
+//       dispatch({
+//         type: SET_BUDGETS,
+//         payload: null
+//       });
+//     });
+// };
+
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios

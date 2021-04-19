@@ -5,7 +5,7 @@ import Category from '../components/budget/Category';
 import ScreamSkeleton from '../util/ScreamSkeleton';
 
 import { connect } from 'react-redux';
-import { getCategories } from '../redux/actions/dataActions';
+import { getCategories } from '../redux/actions/categoryActions';
 import CategorySkeleton from '../components/budget/CategorySkeleton';
 
 class categories extends Component {

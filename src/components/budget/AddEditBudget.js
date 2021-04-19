@@ -14,7 +14,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 // Redux stuff
 import { connect } from "react-redux";
-import { postBudget, clearErrors, updateBudget } from "../../redux/actions/dataActions";
+import { postBudget, clearErrors, updateBudget } from "../../redux/actions/budgetActions";
 import moment from "moment";
 import { POST_BUDGET, UPDATE_BUDGET } from "../../redux/types";
 
@@ -120,6 +120,7 @@ class AddEditBudget extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <TextField
+                autoFocus
                 name="description"
                 type="text"
                 label="Budget"
